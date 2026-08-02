@@ -4,7 +4,6 @@ import { useEffect, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 
 // Updated Slide Data with Authentic Japanese Product Keywords
 const slides = [
@@ -89,14 +88,9 @@ export default function HeroCarousel() {
       "@type": "ListItem",
       "position": idx + 1,
       "item": {
-        "@type": "Product",
+        "@type": "WebPage",
         "name": slide.title,
         "description": slide.subtext,
-        "category": slide.category,
-        "countryOfOrigin": {
-          "@type": "Country",
-          "name": "Japan",
-        },
         "url": slide.ctaLink,
       },
     })),
@@ -168,7 +162,7 @@ export default function HeroCarousel() {
         </AnimatePresence>
 
         {/* Dynamic Content Overlay */}
-        <div className="absolute inset-0 z-10 flex items-start md:items-center px-6 sm:px-12 md:px-20 lg:px-28 pt-32 sm:pt-36 md:pt-0">
+        <div className="absolute inset-0 z-10 flex items-start md:items-center px-6 sm:px-12 md:px-20 lg:px-28 pt-28 sm:pt-36 md:pt-0">
           <AnimatePresence mode="wait">
             <motion.div
               key={`text-${currentSlide.id}`}
@@ -176,21 +170,21 @@ export default function HeroCarousel() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.4, ease: "easeOut" }}
-              className="max-w-xl text-white space-y-2.5 sm:space-y-4"
+              className="max-w-xl text-white space-y-3 sm:space-y-4"
             >
-              <h2 className="text-xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-snug drop-shadow-md">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight sm:leading-snug drop-shadow-md">
                 {currentSlide.title}
               </h2>
 
-              <p className="text-xs sm:text-base text-gray-200 line-clamp-2 drop-shadow max-w-[85%] sm:max-w-none">
+              <p className="text-sm sm:text-base text-gray-100 line-clamp-2 drop-shadow max-w-[90%] sm:max-w-none">
                 {currentSlide.subtext}
               </p>
 
-              <div className="pt-1 sm:pt-2">
+              <div className="pt-2">
                 <Link
                   href={currentSlide.ctaLink}
                   title={`Shop ${currentSlide.title}`}
-                  className="inline-block bg-white text-slate-950 font-semibold px-5 sm:px-8 py-2 sm:py-3 rounded-full hover:bg-slate-100 transition-colors duration-200 shadow-lg text-xs sm:text-sm"
+                  className="inline-block bg-white text-slate-950 font-semibold px-6 sm:px-8 py-2.5 sm:py-3 rounded-full hover:bg-slate-100 transition-colors duration-200 shadow-lg text-sm sm:text-base"
                 >
                   {currentSlide.ctaText}
                 </Link>
@@ -198,23 +192,6 @@ export default function HeroCarousel() {
             </motion.div>
           </AnimatePresence>
         </div>
-
-        {/* Navigation Controls */}
-        <button
-          onClick={prevSlide}
-          aria-label="Previous Slide"
-          className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-2.5 sm:p-3 rounded-full bg-black/30 hover:bg-black/60 text-white backdrop-blur-md transition-all duration-200 opacity-80 sm:opacity-0 sm:group-hover:opacity-100 border border-white/10"
-        >
-          <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
-        </button>
-
-        <button
-          onClick={nextSlide}
-          aria-label="Next Slide"
-          className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-2.5 sm:p-3 rounded-full bg-black/30 hover:bg-black/60 text-white backdrop-blur-md transition-all duration-200 opacity-80 sm:opacity-0 sm:group-hover:opacity-100 border border-white/10"
-        >
-          <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
-        </button>
 
         {/* Slide Indicators */}
         <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-20 flex gap-2">
