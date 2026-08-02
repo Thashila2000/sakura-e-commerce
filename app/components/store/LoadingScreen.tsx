@@ -5,18 +5,18 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
 export default function LoadingScreen() {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const hasSeenLoader = sessionStorage.getItem("sakura_has_visited");
+    const hasVisited = sessionStorage.getItem("sakura_has_visited");
 
-    if (!hasSeenLoader) {
-      setIsLoading(true);
-
+    if (hasVisited) {
+      setIsLoading(false);
+    } else {
       const timer = setTimeout(() => {
         setIsLoading(false);
-        // ONLY mark as visited after the 3.5s loading finishes!
         sessionStorage.setItem("sakura_has_visited", "true");
+        window.dispatchEvent(new Event("sakura_loader_complete"));
       }, 3500);
 
       return () => clearTimeout(timer);
@@ -27,10 +27,27 @@ export default function LoadingScreen() {
     <AnimatePresence>
       {isLoading && (
         <motion.div
+          id="sakura-loader-wrapper"
+          suppressHydrationWarning
           key="loader"
           className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#fbb7dd] overflow-hidden"
           exit={{ opacity: 0, scale: 1.02, transition: { duration: 0.8, ease: "easeOut" } }}
         >
+          {/* 
+            Runs synchronously during HTML parsing BEFORE the first paint.
+            If visited, hides the loader in <1ms so no loader flashes on refresh.
+          */}
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                if (typeof window !== 'undefined' && sessionStorage.getItem('sakura_has_visited') === 'true') {
+                  var el = document.getElementById('sakura-loader-wrapper');
+                  if (el) el.style.display = 'none';
+                }
+              `,
+            }}
+          />
+
           {/* Dense Floating Sakura Petals Background (16 Petals) */}
           <div className="absolute inset-0 pointer-events-none opacity-60 overflow-hidden">
             {[...Array(16)].map((_, i) => (
