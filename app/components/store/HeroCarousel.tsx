@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 
-// Updated Slide Data with Authentic Japanese Product Keywords
 const slides = [
   {
     id: 1,
@@ -45,8 +44,37 @@ const slides = [
 export default function HeroCarousel() {
   const [index, setIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [isReadyToSlide, setIsReadyToSlide] = useState(false);
+
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+  // Synchronize carousel auto-play directly with the loading screen completion event
+  useEffect(() => {
+    const hasSeenLoader = sessionStorage.getItem("sakura_has_visited");
+
+    if (hasSeenLoader) {
+      // Returning visitor or refresh: start sliding immediately
+      setIsReadyToSlide(true);
+    } else {
+      // First visit: listen for the completion event dispatched by LoadingScreen
+      const handleLoaderComplete = () => {
+        setIsReadyToSlide(true);
+      };
+
+      window.addEventListener("sakura_loader_complete", handleLoaderComplete);
+
+      // Fallback timer just in case
+      const timer = setTimeout(() => {
+        setIsReadyToSlide(true);
+      }, 4300);
+
+      return () => {
+        window.removeEventListener("sakura_loader_complete", handleLoaderComplete);
+        clearTimeout(timer);
+      };
+    }
+  }, []);
 
   const nextSlide = useCallback(() => {
     setIndex((prev) => (prev + 1) % slides.length);
@@ -56,11 +84,12 @@ export default function HeroCarousel() {
     setIndex((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
   }, []);
 
+  // Timer only runs if `isReadyToSlide` is true and user is not hovering
   useEffect(() => {
-    if (isPaused) return;
+    if (isPaused || !isReadyToSlide) return;
     const interval = setInterval(nextSlide, 4000);
     return () => clearInterval(interval);
-  }, [nextSlide, isPaused, index]);
+  }, [nextSlide, isPaused, isReadyToSlide, index]);
 
   const onTouchStart = (e: React.TouchEvent) => {
     setTouchEnd(null);
@@ -79,6 +108,7 @@ export default function HeroCarousel() {
   };
 
   const currentSlide = slides[index];
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://yourdomain.com";
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -91,7 +121,7 @@ export default function HeroCarousel() {
         "@type": "WebPage",
         "name": slide.title,
         "description": slide.subtext,
-        "url": slide.ctaLink,
+        "url": `${baseUrl}${slide.ctaLink}`,
       },
     })),
   };
@@ -106,7 +136,7 @@ export default function HeroCarousel() {
       <section
         aria-roledescription="carousel"
         aria-label="Authentic Japanese Green Tea, Spices, and Cosmetics"
-        className="relative w-full aspect-[9/16] sm:aspect-[4/3] md:aspect-[16/9] max-h-[85vh] overflow-hidden bg-[#E8DEC8] group"
+        className="relative z-0 isolate w-full aspect-[9/16] sm:aspect-[4/3] md:aspect-[16/9] max-h-[85vh] overflow-hidden bg-[#E8DEC8] group"
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
         onTouchStart={onTouchStart}
@@ -155,7 +185,7 @@ export default function HeroCarousel() {
               />
             </div>
 
-            {/* Top & Side Gradients for readability */}
+            {/* Top & Side Gradients */}
             <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/20 pointer-events-none" />
             <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent pointer-events-none" />
           </motion.div>

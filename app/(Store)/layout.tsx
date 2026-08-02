@@ -1,4 +1,5 @@
 import Navbar from '../components/store/StoreNavbar';
+import LoadingScreen from '../components/store/LoadingScreen'; // Adjust path if needed
 
 export default function StoreLayout({
   children,
@@ -7,7 +8,10 @@ export default function StoreLayout({
 }) {
   return (
     <div className="store-container min-h-screen flex flex-col bg-white text-slate-900 relative">
-      {/* Absolute positioning makes the navbar overlay on top of the content */}
+      {/* Fast & Unique Loading Screen with #fbb7dd background */}
+      <LoadingScreen />
+
+      {/* Absolute positioning overlays the navbar on top of the hero section */}
       <header className="absolute top-0 left-0 right-0 z-50">
         <Navbar />
       </header>
