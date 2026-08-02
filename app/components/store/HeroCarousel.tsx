@@ -43,28 +43,24 @@ const slides = [
 
 export default function HeroCarousel() {
   const [index, setIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
   const [isReadyToSlide, setIsReadyToSlide] = useState(false);
 
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
-  // Synchronize carousel auto-play directly with the loading screen completion event
+  // Synchronize carousel auto-play directly with loading screen completion
   useEffect(() => {
     const hasSeenLoader = sessionStorage.getItem("sakura_has_visited");
 
     if (hasSeenLoader) {
-      // Returning visitor or refresh: start sliding immediately
       setIsReadyToSlide(true);
     } else {
-      // First visit: listen for the completion event dispatched by LoadingScreen
       const handleLoaderComplete = () => {
         setIsReadyToSlide(true);
       };
 
       window.addEventListener("sakura_loader_complete", handleLoaderComplete);
 
-      // Fallback timer just in case
       const timer = setTimeout(() => {
         setIsReadyToSlide(true);
       }, 4300);
@@ -84,12 +80,12 @@ export default function HeroCarousel() {
     setIndex((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
   }, []);
 
-  // Timer only runs if `isReadyToSlide` is true and user is not hovering
+  // Timer continuously runs once `isReadyToSlide` becomes true
   useEffect(() => {
-    if (isPaused || !isReadyToSlide) return;
+    if (!isReadyToSlide) return;
     const interval = setInterval(nextSlide, 4000);
     return () => clearInterval(interval);
-  }, [nextSlide, isPaused, isReadyToSlide, index]);
+  }, [nextSlide, isReadyToSlide, index]);
 
   const onTouchStart = (e: React.TouchEvent) => {
     setTouchEnd(null);
@@ -137,8 +133,6 @@ export default function HeroCarousel() {
         aria-roledescription="carousel"
         aria-label="Authentic Japanese Green Tea, Spices, and Cosmetics"
         className="relative z-0 isolate w-full aspect-[9/16] sm:aspect-[4/3] md:aspect-[16/9] max-h-[85vh] overflow-hidden bg-[#E8DEC8] group"
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
