@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
 const essentials = [
   {
@@ -10,7 +10,7 @@ const essentials = [
     description:
       "Premium skincare and beauty products inspired by Japanese rituals.",
     image: "/images/cosmetics.png",
-    
+    icon: "✨",
     size: "large",
   },
   {
@@ -19,7 +19,7 @@ const essentials = [
     description:
       "Traditional seasonings that bring Japanese flavors to your kitchen.",
     image: "/images/spices.png",
-    
+    icon: "🌶",
     size: "small",
   },
   {
@@ -27,13 +27,13 @@ const essentials = [
     title: "Green Tea",
     description: "Authentic teas sourced for everyday wellness.",
     image: "/images/green-tea.png",
-  
+    icon: "🍵",
     size: "small",
   },
 ];
 
-// Heading Entrance Animation Variants
-const headingVariants = {
+// Explicitly typed as Variants to fix TypeScript build error
+const headingVariants: Variants = {
   hidden: { 
     opacity: 0, 
     y: -30, 
@@ -50,8 +50,8 @@ const headingVariants = {
   },
 };
 
-// Bento Cards Pop-Up Animation Variants
-const cardVariants = {
+// Explicitly typed as Variants
+const cardVariants: Variants = {
   hidden: { 
     opacity: 0, 
     y: 50, 
@@ -63,8 +63,8 @@ const cardVariants = {
     scale: 1,
     transition: {
       duration: 0.6,
-      ease: [0.21, 1.11, 0.81, 0.99], // Custom cubic spring curve for a subtle pop effect
-      delay: 0.2 + customIndex * 0.15, // Stagger delay after heading appears
+      ease: [0.21, 1.11, 0.81, 0.99],
+      delay: 0.2 + customIndex * 0.15,
     },
   }),
 };
