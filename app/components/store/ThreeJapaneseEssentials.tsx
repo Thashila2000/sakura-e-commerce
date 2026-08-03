@@ -119,7 +119,7 @@ export default function ThreeJapaneseEssentials() {
               variants={cardVariants}
               className="group relative rounded-3xl overflow-hidden border border-stone-200/60
                          shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl
-                         h-[280px] md:h-full cursor-pointer"
+                         h-[360px] md:h-full cursor-pointer"
             >
               <div className="relative w-full h-full">
                 <Image
@@ -135,12 +135,14 @@ export default function ThreeJapaneseEssentials() {
                 <h3 className="text-2xl md:text-3xl text-white font-[family-name:var(--font-bayon)] flex items-center gap-2 drop-shadow-md tracking-wide">
                   <span>{large.icon}</span> {large.title}
                 </h3>
-                <p className="text-white/90 text-sm sm:text-base leading-relaxed max-w-sm drop-shadow-md pb-2">
+                {/* Description size bumped to text-base on mobile */}
+                <p className="text-white/90 text-base sm:text-base md:text-base leading-relaxed max-w-sm drop-shadow-md pb-2">
                   {large.description}
                 </p>
+                {/* Unified button size */}
                 <button
                   type="button"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-stone-900 font-semibold text-sm transition-all duration-300 hover:bg-stone-100 hover:scale-105 shadow-md"
+                  className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-white text-stone-900 font-semibold text-sm transition-all duration-300 hover:bg-stone-100 hover:scale-105 shadow-md"
                 >
                   <span>Explore</span>
                   <svg
@@ -173,7 +175,7 @@ export default function ThreeJapaneseEssentials() {
                 variants={cardVariants}
                 className="group relative rounded-3xl overflow-hidden border border-stone-200/60
                            shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl
-                           h-[240px] md:h-full cursor-pointer"
+                           h-[320px] md:h-full cursor-pointer"
               >
                 <div className="relative w-full h-full">
                   <Image
@@ -189,12 +191,14 @@ export default function ThreeJapaneseEssentials() {
                   <h3 className="text-2xl md:text-3xl text-white font-[family-name:var(--font-bayon)] flex items-center gap-2 drop-shadow-md tracking-wide">
                     <span>{item.icon}</span> {item.title}
                   </h3>
-                  <p className="text-white/90 text-sm sm:text-base leading-relaxed max-w-sm drop-shadow-md pb-2">
+                  {/* Description size bumped to text-base on mobile */}
+                  <p className="text-white/90 text-base sm:text-base md:text-base leading-relaxed max-w-sm drop-shadow-md pb-2">
                     {item.description}
                   </p>
+                  {/* Unified button size */}
                   <button
                     type="button"
-                    className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white text-stone-900 font-semibold text-sm transition-all duration-300 hover:bg-stone-100 hover:scale-105 shadow-md"
+                    className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-white text-stone-900 font-semibold text-sm transition-all duration-300 hover:bg-stone-100 hover:scale-105 shadow-md"
                   >
                     <span>Explore</span>
                     <svg
