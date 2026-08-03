@@ -53,7 +53,10 @@ export default function HeroCarousel() {
     const hasSeenLoader = sessionStorage.getItem("sakura_has_visited");
 
     if (hasSeenLoader) {
-      setIsReadyToSlide(true);
+      const timer = setTimeout(() => {
+        setIsReadyToSlide(true);
+      }, 0);
+      return () => clearTimeout(timer);
     } else {
       const handleLoaderComplete = () => {
         setIsReadyToSlide(true);
@@ -132,7 +135,7 @@ export default function HeroCarousel() {
       <section
         aria-roledescription="carousel"
         aria-label="Authentic Japanese Green Tea, Spices, and Cosmetics"
-        className="relative z-0 isolate w-full aspect-[9/16] sm:aspect-[4/3] md:aspect-[16/9] max-h-[85vh] overflow-hidden bg-[#E8DEC8] group"
+        className="relative z-0 isolate w-full h-full min-h-screen overflow-hidden bg-[#E8DEC8] group"
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
@@ -151,22 +154,22 @@ export default function HeroCarousel() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
           >
-            {/* Mobile Image */}
-            <div className="block md:hidden relative w-full h-full">
+            {/* Mobile & Tablet Image (Up to lg screens - 1024px, and portrait orientation) */}
+            <div className="block lg:landscape:hidden relative w-full h-full">
               <Image
                 src={currentSlide.mobileSrc}
                 alt={currentSlide.altText}
                 fill
                 sizes="100vw"
-                quality={90}
+                quality={95}
                 priority={index === 0}
                 fetchPriority={index === 0 ? "high" : "auto"}
-                className="object-cover object-bottom"
+                className="object-cover object-center sm:object-center"
               />
             </div>
 
-            {/* Desktop Image */}
-            <div className="hidden md:block relative w-full h-full">
+            {/* Desktop Widescreen Image (lg screens and above, landscape orientation only) */}
+            <div className="hidden lg:landscape:block relative w-full h-full">
               <Image
                 src={currentSlide.desktopSrc}
                 alt={currentSlide.altText}
@@ -180,13 +183,13 @@ export default function HeroCarousel() {
             </div>
 
             {/* Top & Side Gradients */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/20 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/30 pointer-events-none" />
             <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent pointer-events-none" />
           </motion.div>
         </AnimatePresence>
 
         {/* Dynamic Content Overlay */}
-        <div className="absolute inset-0 z-10 flex items-start md:items-center px-6 sm:px-12 md:px-20 lg:px-28 pt-28 sm:pt-36 md:pt-0">
+        <div className="absolute inset-0 z-10 flex items-center portrait:items-start px-6 sm:px-12 md:px-20 lg:px-28 portrait:pt-36 sm:portrait:pt-44 md:portrait:pt-56 lg:landscape:items-center lg:landscape:pt-0">
           <AnimatePresence mode="wait">
             <motion.div
               key={`text-${currentSlide.id}`}
@@ -194,13 +197,13 @@ export default function HeroCarousel() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.4, ease: "easeOut" }}
-              className="max-w-xl text-white space-y-3 sm:space-y-4"
+              className="max-w-xl md:max-w-2xl text-white space-y-3 sm:space-y-4 pt-12 md:pt-0 portrait:pt-0"
             >
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight sm:leading-snug drop-shadow-md">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight sm:leading-snug drop-shadow-md">
                 {currentSlide.title}
               </h2>
 
-              <p className="text-sm sm:text-base text-gray-100 line-clamp-2 drop-shadow max-w-[90%] sm:max-w-none">
+              <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-100 line-clamp-2 drop-shadow max-w-[90%] sm:max-w-none">
                 {currentSlide.subtext}
               </p>
 
@@ -208,7 +211,7 @@ export default function HeroCarousel() {
                 <Link
                   href={currentSlide.ctaLink}
                   title={`Shop ${currentSlide.title}`}
-                  className="inline-block bg-white text-slate-950 font-semibold px-6 sm:px-8 py-2.5 sm:py-3 rounded-full hover:bg-slate-100 transition-colors duration-200 shadow-lg text-sm sm:text-base"
+                  className="inline-block bg-white text-slate-950 font-semibold px-6 sm:px-8 md:px-10 py-2.5 sm:py-3 md:py-4 rounded-full hover:bg-slate-100 transition-colors duration-200 shadow-lg text-sm sm:text-base md:text-lg"
                 >
                   {currentSlide.ctaText}
                 </Link>
@@ -218,7 +221,7 @@ export default function HeroCarousel() {
         </div>
 
         {/* Slide Indicators */}
-        <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2">
           {slides.map((slide, i) => (
             <button
               key={slide.id}

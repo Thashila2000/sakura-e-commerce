@@ -1,5 +1,12 @@
+import { Bayon } from 'next/font/google';
 import Navbar from '../components/store/StoreNavbar';
 import LoadingScreen from '../components/store/LoadingScreen'; // Adjust path if needed
+
+const bayon = Bayon({
+  weight: '400',
+  subsets: ['latin'],
+  variable: '--font-bayon',
+});
 
 export default function StoreLayout({
   children,
@@ -7,7 +14,9 @@ export default function StoreLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="store-container min-h-screen flex flex-col bg-white text-slate-900 relative">
+    <div
+      className={`store-container min-h-screen flex flex-col bg-white text-slate-900 relative ${bayon.variable}`}
+    >
       {/* Fast & Unique Loading Screen with #fbb7dd background */}
       <LoadingScreen />
 

@@ -11,7 +11,10 @@ export default function LoadingScreen() {
     const hasVisited = sessionStorage.getItem("sakura_has_visited");
 
     if (hasVisited) {
-      setIsLoading(false);
+      const timer = setTimeout(() => {
+        setIsLoading(false);
+      }, 0);
+      return () => clearTimeout(timer);
     } else {
       const timer = setTimeout(() => {
         setIsLoading(false);

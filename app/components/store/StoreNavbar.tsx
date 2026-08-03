@@ -25,7 +25,7 @@ const NAV_LINKS: NavItem[] = [
   { href: '/contact', label: 'Contact Us' },
 ];
 
-const BRAND_COLOR = '#901f3b';
+const BRAND_COLOR = '#C0003A';
 
 // Pages with dark hero backgrounds — navbar will use dark mode on these
 const DARK_BG_PAGES: string[] = [];
@@ -36,6 +36,12 @@ export default function Navbar() {
   const [darkBg, setDarkBg] = useState(false);
   const [mobileDropdownOpen, setMobileDropdownOpen] = useState(false);
   const pathname = usePathname();
+
+  // Helper function to safely close the menu and reset all dropdown states
+  const closeAllMenus = () => {
+    setMenuOpen(false);
+    setMobileDropdownOpen(false);
+  };
 
   // Detect if we are over a dark background section
   useEffect(() => {
@@ -62,7 +68,7 @@ export default function Navbar() {
   // Lock body when mobile/tablet menu is open
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : '';
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setMenuOpen(false);
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && closeAllMenus();
     window.addEventListener('keydown', onKey);
     return () => {
       document.body.style.overflow = '';
@@ -113,11 +119,15 @@ export default function Navbar() {
           white-space: nowrap;
           cursor: pointer;
         }
+        
+        .dropdown-container:hover .nav-link,
+        .dropdown-container:focus-within .nav-link,
         .nav-link:hover {
           color: var(--link-hover) !important;
           background: var(--link-hover-bg);
           transform: translateY(-1px);
         }
+
         .nav-link.active {
           font-weight: 700;
           color: #fff !important;
@@ -208,12 +218,15 @@ export default function Navbar() {
           z-index: 40;
           display: flex;
           flex-direction: column;
+          background: rgba(255, 255, 255, 0.98);
+          backdrop-filter: blur(24px);
+          -webkit-backdrop-filter: blur(24px);
           transition: opacity 0.3s ease;
         }
         .mobile-overlay.closed { opacity: 0; pointer-events: none; }
         .mobile-overlay.open   { opacity: 1; pointer-events: all;  }
 
-        /* Mobile & Tablet Link Item Styles with Added Spacing */
+        /* Mobile & Tablet Link Item Styles */
         .mobile-nav-item {
           margin-bottom: 12px;
         }
@@ -223,7 +236,6 @@ export default function Navbar() {
           align-items: center;
           justify-content: space-between;
           padding: 16px 12px;
-          border-bottom: 1px solid rgba(15,23,42,0.06);
           font-size: 1.25rem;
           font-weight: 700;
           color: #0F172A;
@@ -234,9 +246,15 @@ export default function Navbar() {
           border-bottom: 1px solid rgba(15,23,42,0.06);
           width: 100%;
           cursor: pointer;
+          outline: none;
+          -webkit-tap-highlight-color: transparent;
         }
-        .mobile-nav-link.active { color: ${BRAND_COLOR}; }
-        .mobile-nav-link:hover  { color: ${BRAND_COLOR}; }
+        
+        /* Highlight only when explicitly expanded or actively on sub-route */
+        .mobile-nav-link.expanded,
+        .mobile-nav-link.active { 
+          color: ${BRAND_COLOR}; 
+        }
 
         /* Mobile Sub-Links Container & Items Gap */
         .mobile-sublinks-container {
@@ -253,23 +271,26 @@ export default function Navbar() {
           padding: 12px 18px;
           font-size: 1.05rem;
           font-weight: 600;
-          color: #475569;
+          color: #0F172A;
           text-decoration: none;
           border-radius: 8px;
-          background: rgba(15,23,42,0.02);
-          border-bottom: 1px dashed rgba(15,23,42,0.05);
+          background: rgba(15, 23, 42, 0.03);
+          border-bottom: 1px dashed rgba(15, 23, 42, 0.08);
           transition: color 0.15s, background 0.15s;
+          outline: none;
+          -webkit-tap-highlight-color: transparent;
         }
-        .mobile-sublink:hover, .mobile-sublink.active {
+
+        .mobile-sublink.active {
           color: ${BRAND_COLOR};
-          background: rgba(144, 31, 59, 0.06);
+          background: rgba(192, 0, 58, 0.08);
         }
 
         /* Overlay animations */
         .mobile-overlay.open   .mobile-nav-link { transform: translateY(0); opacity: 1; }
         .mobile-overlay.closed .mobile-nav-link { transform: translateY(12px); opacity: 0; }
 
-        /* Responsive Breakpoints for iPad Pro, Nest Hub & Tablet Support (up to 1024px) */
+        /* Responsive Breakpoints */
         .desktop-only { display: flex !important; }
         .mobile-tab-only { display: none !important; }
 
@@ -286,7 +307,7 @@ export default function Navbar() {
           left: 0,
           right: 0,
           zIndex: 50,
-          padding: '10px 16px', // Reduced header vertical padding
+          padding: '10px 16px',
           fontFamily: 'var(--font-space-grotesk), sans-serif',
         }}
       >
@@ -297,7 +318,7 @@ export default function Navbar() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            padding: '8px 20px', // Reduced navbar padding to decrease total height
+            padding: '8px 20px',
             borderRadius: 16,
             border: `1px solid ${navBorder}`,
             background: navBg,
@@ -312,8 +333,8 @@ export default function Navbar() {
             <div
               style={{
                 position: 'relative',
-                width: 170, // Optimized width for streamlined navbar height
-                height: 46, // Reduced height
+                width: 170,
+                height: 46,
               }}
             >
               <Image
@@ -417,9 +438,15 @@ export default function Navbar() {
             })}
           </ul>
 
-          {/* Hamburger Menu Toggle (Mobile, Tablet, iPad Pro & Nest Hub) */}
+          {/* Hamburger Menu Toggle */}
           <button
-            onClick={() => setMenuOpen((v) => !v)}
+            onClick={() => {
+              if (menuOpen) {
+                closeAllMenus();
+              } else {
+                setMenuOpen(true);
+              }
+            }}
             aria-label={menuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={menuOpen}
             className="mobile-tab-only"
@@ -451,18 +478,11 @@ export default function Navbar() {
       </header>
 
       {/* Mobile & Tablet Overlay Drawer */}
-      <div
-        className={`mobile-overlay ${menuOpen ? 'open' : 'closed'}`}
-        style={{
-          background: 'rgba(255,255,255,0.98)',
-          backdropFilter: 'blur(24px)',
-          WebkitBackdropFilter: 'blur(24px)',
-        }}
-      >
+      <div className={`mobile-overlay ${menuOpen ? 'open' : 'closed'}`}>
         {/* Close Button Header */}
         <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '24px 24px 0' }}>
           <button
-            onClick={() => setMenuOpen(false)}
+            onClick={closeAllMenus}
             aria-label="Close menu"
             style={{
               width: 44,
@@ -490,15 +510,16 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* Mobile & Tablet Overlay Navigation List */}
+        {/* Mobile Navigation List */}
         <nav style={{ padding: '24px 32px', flex: 1, overflowY: 'auto' }}>
           {NAV_LINKS.map((link, i) => {
             if (link.children) {
+              const isChildActive = link.children.some((c) => pathname === c.href);
               return (
                 <div key={link.label} className="mobile-nav-item">
                   <button
                     onClick={() => setMobileDropdownOpen((prev) => !prev)}
-                    className="mobile-nav-link"
+                    className={`mobile-nav-link${mobileDropdownOpen ? ' expanded' : ''}${isChildActive ? ' active' : ''}`}
                     style={{ transitionDelay: menuOpen ? `${i * 50}ms` : '0ms' }}
                   >
                     <span>{link.label}</span>
@@ -528,7 +549,7 @@ export default function Navbar() {
                         <LinkNext
                           key={child.href}
                           href={child.href}
-                          onClick={() => setMenuOpen(false)}
+                          onClick={closeAllMenus}
                           className={`mobile-sublink${pathname === child.href ? ' active' : ''}`}
                         >
                           {child.label}
@@ -544,7 +565,7 @@ export default function Navbar() {
               <div key={link.href} className="mobile-nav-item">
                 <LinkNext
                   href={link.href!}
-                  onClick={() => setMenuOpen(false)}
+                  onClick={closeAllMenus}
                   className={`mobile-nav-link${pathname === link.href ? ' active' : ''}`}
                   style={{ transitionDelay: menuOpen ? `${i * 50}ms` : '0ms' }}
                 >
