@@ -73,7 +73,7 @@ export default function ThreeJapaneseEssentials() {
 
   return (
     <section
-      className="relative w-full z-10 -mt-8 sm:-mt-12 md:-mt-20 overflow-hidden"
+      className="relative w-full z-10 -mt-8 sm:-mt-12 md:-mt-20 overflow-hidden antialiased"
       style={{ backgroundColor: "#fffafa" }}
     >
       {/* Wave Curve Top */}
@@ -97,18 +97,18 @@ export default function ThreeJapaneseEssentials() {
           whileInView="visible"
           viewport={{ once: false, amount: 0.4 }}
           variants={headingVariants}
-          className="text-center mb-8 md:mb-12 max-w-2xl mx-auto space-y-2"
+          className="text-center mb-8 md:mb-12 max-w-2xl mx-auto space-y-2 antialiased"
         >
-          <h2 className="text-4xl sm:text-6xl md:text-7xl text-stone-900 tracking-wide font-[family-name:var(--font-bayon)] uppercase">
+          <h2 className="text-4xl sm:text-6xl md:text-7xl text-stone-900 tracking-wide font-[family-name:var(--font-bayon)] uppercase antialiased">
             Three Japanese Essentials
           </h2>
-          <p className="text-stone-600 text-sm sm:text-base md:text-lg leading-relaxed">
+          <p className="text-stone-600 text-sm sm:text-base md:text-lg leading-relaxed antialiased">
             Handpicked elements of everyday Japanese culture crafted for health, flavor, and timeless beauty rituals.
           </p>
         </motion.div>
 
         {/* Compact Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:h-[480px]">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:h-[520px]">
           {/* Large Card (Beauty & Cosmetics) */}
           {large && (
             <motion.div
@@ -117,9 +117,9 @@ export default function ThreeJapaneseEssentials() {
               whileInView="visible"
               viewport={{ once: false, amount: 0.2 }}
               variants={cardVariants}
-              className="group relative rounded-2xl overflow-hidden border border-stone-200/60
+              className="group relative rounded-3xl overflow-hidden border border-stone-200/60
                          shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl
-                         h-[260px] md:h-full cursor-pointer"
+                         h-[280px] md:h-full cursor-pointer"
             >
               <div className="relative w-full h-full">
                 <Image
@@ -128,23 +128,23 @@ export default function ThreeJapaneseEssentials() {
                   fill
                   className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/35 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/40 to-transparent" />
               </div>
 
-              <div className="absolute top-0 left-0 right-0 p-4 md:p-5 z-10 flex flex-col items-start">
-                <h3 className="text-lg md:text-xl text-white mb-1 font-[family-name:var(--font-bayon)] flex items-center gap-1.5 drop-shadow">
+              <div className="absolute top-0 left-0 right-0 p-6 md:p-8 z-10 flex flex-col items-start space-y-2">
+                <h3 className="text-2xl md:text-3xl text-white font-[family-name:var(--font-bayon)] flex items-center gap-2 drop-shadow-md tracking-wide">
                   <span>{large.icon}</span> {large.title}
                 </h3>
-                <p className="text-white/90 text-xs sm:text-sm leading-snug max-w-xs drop-shadow mb-3">
+                <p className="text-white/90 text-sm sm:text-base leading-relaxed max-w-sm drop-shadow-md pb-2">
                   {large.description}
                 </p>
                 <button
                   type="button"
-                  className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full bg-white text-stone-900 font-semibold text-xs transition-all duration-300 hover:bg-stone-100 hover:scale-105 shadow-sm"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-stone-900 font-semibold text-sm transition-all duration-300 hover:bg-stone-100 hover:scale-105 shadow-md"
                 >
-                  Explore
+                  <span>Explore</span>
                   <svg
-                    className="w-3 h-3 transition-transform duration-300 group-hover:translate-x-0.5"
+                    className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -171,9 +171,9 @@ export default function ThreeJapaneseEssentials() {
                 whileInView="visible"
                 viewport={{ once: false, amount: 0.2 }}
                 variants={cardVariants}
-                className="group relative rounded-2xl overflow-hidden border border-stone-200/60
+                className="group relative rounded-3xl overflow-hidden border border-stone-200/60
                            shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl
-                           h-[220px] md:h-full cursor-pointer"
+                           h-[240px] md:h-full cursor-pointer"
               >
                 <div className="relative w-full h-full">
                   <Image
@@ -182,23 +182,23 @@ export default function ThreeJapaneseEssentials() {
                     fill
                     className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/35 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/40 to-transparent" />
                 </div>
 
-                <div className="absolute top-0 left-0 right-0 p-4 md:p-5 z-10 flex flex-col items-start">
-                  <h3 className="text-lg md:text-xl text-white mb-1 font-[family-name:var(--font-bayon)] flex items-center gap-1.5 drop-shadow">
+                <div className="absolute top-0 left-0 right-0 p-5 md:p-6 z-10 flex flex-col items-start space-y-1.5">
+                  <h3 className="text-2xl md:text-3xl text-white font-[family-name:var(--font-bayon)] flex items-center gap-2 drop-shadow-md tracking-wide">
                     <span>{item.icon}</span> {item.title}
                   </h3>
-                  <p className="text-white/90 text-xs sm:text-sm leading-snug max-w-xs drop-shadow mb-3">
+                  <p className="text-white/90 text-sm sm:text-base leading-relaxed max-w-sm drop-shadow-md pb-2">
                     {item.description}
                   </p>
                   <button
                     type="button"
-                    className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full bg-white text-stone-900 font-semibold text-xs transition-all duration-300 hover:bg-stone-100 hover:scale-105 shadow-sm"
+                    className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white text-stone-900 font-semibold text-sm transition-all duration-300 hover:bg-stone-100 hover:scale-105 shadow-md"
                   >
-                    Explore
+                    <span>Explore</span>
                     <svg
-                      className="w-3 h-3 transition-transform duration-300 group-hover:translate-x-0.5"
+                      className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
