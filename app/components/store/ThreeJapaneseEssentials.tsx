@@ -32,7 +32,6 @@ const essentials = [
   },
 ];
 
-// Explicitly typed as Variants to fix TypeScript build error
 const headingVariants: Variants = {
   hidden: { 
     opacity: 0, 
@@ -50,21 +49,20 @@ const headingVariants: Variants = {
   },
 };
 
-// Explicitly typed as Variants
 const cardVariants: Variants = {
   hidden: { 
     opacity: 0, 
-    y: 50, 
-    scale: 0.94 
+    y: 40, 
+    scale: 0.95 
   },
   visible: (customIndex: number) => ({
     opacity: 1,
     y: 0,
     scale: 1,
     transition: {
-      duration: 0.6,
+      duration: 0.5,
       ease: [0.21, 1.11, 0.81, 0.99],
-      delay: 0.2 + customIndex * 0.15,
+      delay: 0.15 + customIndex * 0.12,
     },
   }),
 };
@@ -76,7 +74,7 @@ export default function ThreeJapaneseEssentials() {
   return (
     <section
       className="relative w-full z-10 -mt-8 sm:-mt-12 md:-mt-20 overflow-hidden"
-      style={{ backgroundColor: "#bf8065" }}
+      style={{ backgroundColor: "#fffafa" }}
     >
       {/* Wave Curve Top */}
       <div className="w-full overflow-hidden leading-none pointer-events-none select-none">
@@ -87,25 +85,30 @@ export default function ThreeJapaneseEssentials() {
         >
           <path
             d="M0,64 C240,150 480,0 720,32 C960,64 1200,150 1440,64 L1440,120 L0,120 Z"
-            fill="#bf8065"
+            fill="#fffafa"
           />
         </svg>
       </div>
 
-      <div className="relative z-10 mx-auto max-w-7xl px-6 pb-20 pt-0 sm:pt-2 md:pb-28">
-        {/* Animated Heading */}
-        <motion.h2
+      <div className="relative z-10 mx-auto max-w-6xl px-6 pb-16 pt-2 md:pb-20">
+        {/* Animated Heading & Subtitle */}
+        <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: false, amount: 0.4 }}
           variants={headingVariants}
-          className="text-center text-3xl md:text-5xl text-white mb-10 md:mb-14 tracking-wide font-[family-name:var(--font-bayon)]"
+          className="text-center mb-8 md:mb-12 max-w-2xl mx-auto space-y-2"
         >
-          Three Japanese Essentials
-        </motion.h2>
+          <h2 className="text-4xl sm:text-6xl md:text-7xl text-stone-900 tracking-wide font-[family-name:var(--font-bayon)] uppercase">
+            Three Japanese Essentials
+          </h2>
+          <p className="text-stone-600 text-sm sm:text-base md:text-lg leading-relaxed">
+            Handpicked elements of everyday Japanese culture crafted for health, flavor, and timeless beauty rituals.
+          </p>
+        </motion.div>
 
-        {/* Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:h-[640px]">
+        {/* Compact Bento Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:h-[480px]">
           {/* Large Card (Beauty & Cosmetics) */}
           {large && (
             <motion.div
@@ -114,9 +117,9 @@ export default function ThreeJapaneseEssentials() {
               whileInView="visible"
               viewport={{ once: false, amount: 0.2 }}
               variants={cardVariants}
-              className="group relative rounded-3xl overflow-hidden border border-white/20
-                         shadow-lg transition-transform duration-300 hover:-translate-y-1.5 hover:shadow-2xl
-                         h-[320px] md:h-full cursor-pointer"
+              className="group relative rounded-2xl overflow-hidden border border-stone-200/60
+                         shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl
+                         h-[260px] md:h-full cursor-pointer"
             >
               <div className="relative w-full h-full">
                 <Image
@@ -125,23 +128,23 @@ export default function ThreeJapaneseEssentials() {
                   fill
                   className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/40 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/35 to-transparent" />
               </div>
 
-              <div className="absolute top-0 left-0 right-0 p-5 md:p-6 z-10 flex flex-col items-start">
-                <h3 className="text-xl md:text-2xl text-white mb-1 font-[family-name:var(--font-bayon)] flex items-center gap-2 drop-shadow-md">
+              <div className="absolute top-0 left-0 right-0 p-4 md:p-5 z-10 flex flex-col items-start">
+                <h3 className="text-lg md:text-xl text-white mb-1 font-[family-name:var(--font-bayon)] flex items-center gap-1.5 drop-shadow">
                   <span>{large.icon}</span> {large.title}
                 </h3>
-                <p className="text-white/90 text-xs sm:text-sm leading-relaxed max-w-xs drop-shadow mb-4">
+                <p className="text-white/90 text-xs sm:text-sm leading-snug max-w-xs drop-shadow mb-3">
                   {large.description}
                 </p>
                 <button
                   type="button"
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white text-stone-900 font-medium text-xs sm:text-sm transition-all duration-300 hover:bg-white/90 hover:scale-105 shadow-md"
+                  className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full bg-white text-stone-900 font-semibold text-xs transition-all duration-300 hover:bg-stone-100 hover:scale-105 shadow-sm"
                 >
                   Explore
                   <svg
-                    className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1"
+                    className="w-3 h-3 transition-transform duration-300 group-hover:translate-x-0.5"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -159,7 +162,7 @@ export default function ThreeJapaneseEssentials() {
           )}
 
           {/* Stacked Small Cards (Spices & Green Tea) */}
-          <div className="grid grid-rows-2 gap-6 h-full">
+          <div className="grid grid-rows-2 gap-5 h-full">
             {smalls.map((item, idx) => (
               <motion.div
                 key={item.id}
@@ -168,9 +171,9 @@ export default function ThreeJapaneseEssentials() {
                 whileInView="visible"
                 viewport={{ once: false, amount: 0.2 }}
                 variants={cardVariants}
-                className="group relative rounded-3xl overflow-hidden border border-white/20
-                           shadow-lg transition-transform duration-300 hover:-translate-y-1.5 hover:shadow-2xl
-                           h-[340px] md:h-full cursor-pointer"
+                className="group relative rounded-2xl overflow-hidden border border-stone-200/60
+                           shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl
+                           h-[220px] md:h-full cursor-pointer"
               >
                 <div className="relative w-full h-full">
                   <Image
@@ -179,23 +182,23 @@ export default function ThreeJapaneseEssentials() {
                     fill
                     className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/40 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/35 to-transparent" />
                 </div>
 
-                <div className="absolute top-0 left-0 right-0 p-5 md:p-6 z-10 flex flex-col items-start">
-                  <h3 className="text-xl md:text-2xl text-white mb-1 font-[family-name:var(--font-bayon)] flex items-center gap-2 drop-shadow-md">
+                <div className="absolute top-0 left-0 right-0 p-4 md:p-5 z-10 flex flex-col items-start">
+                  <h3 className="text-lg md:text-xl text-white mb-1 font-[family-name:var(--font-bayon)] flex items-center gap-1.5 drop-shadow">
                     <span>{item.icon}</span> {item.title}
                   </h3>
-                  <p className="text-white/90 text-xs sm:text-sm leading-relaxed max-w-xs drop-shadow mb-4">
+                  <p className="text-white/90 text-xs sm:text-sm leading-snug max-w-xs drop-shadow mb-3">
                     {item.description}
                   </p>
                   <button
                     type="button"
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white text-stone-900 font-medium text-xs sm:text-sm transition-all duration-300 hover:bg-white/90 hover:scale-105 shadow-md"
+                    className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full bg-white text-stone-900 font-semibold text-xs transition-all duration-300 hover:bg-stone-100 hover:scale-105 shadow-sm"
                   >
                     Explore
                     <svg
-                      className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1"
+                      className="w-3 h-3 transition-transform duration-300 group-hover:translate-x-0.5"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"

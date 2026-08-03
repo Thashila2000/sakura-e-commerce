@@ -33,7 +33,7 @@ export default function LoadingScreen() {
           id="sakura-loader-wrapper"
           suppressHydrationWarning
           key="loader"
-          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#fbb7dd] overflow-hidden"
+          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#fffafa] overflow-hidden"
           exit={{ opacity: 0, scale: 1.02, transition: { duration: 0.8, ease: "easeOut" } }}
         >
           {/* 
