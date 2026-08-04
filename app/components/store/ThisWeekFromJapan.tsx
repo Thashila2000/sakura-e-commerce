@@ -192,7 +192,7 @@ export default function ThisWeekFromJapan() {
                     </span>
                   </div>
 
-                  <p className="text-stone-600 text-sm leading-relaxed">
+                  <p className="text-stone-600 text-base leading-relaxed">
                     {product.description}
                   </p>
                 </div>

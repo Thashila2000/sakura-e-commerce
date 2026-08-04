@@ -168,7 +168,7 @@ export default function FromJapanWithCare() {
               </h2>
 
               <div className="space-y-5 md:space-y-6">
-                <p className="text-stone-700 text-sm sm:text-base md:text-lg lg:text-xl font-normal leading-relaxed">
+                <p className="text-stone-700 text-base md:text-lg lg:text-xl font-normal leading-relaxed">
                   Every product in our collection is curated, inspected, and delivered directly to your doorstep with pristine attention to detail.
                 </p>
                 <p className="text-stone-900 text-base sm:text-lg md:text-xl lg:text-2xl font-medium font-serif leading-relaxed border-l-4 border-rose-500/80 pl-5 italic drop-shadow-sm">
@@ -208,7 +208,7 @@ export default function FromJapanWithCare() {
                           {pillar.title}
                         </h3>
                       </div>
-                      <p className="text-stone-700 text-xs sm:text-sm md:text-base leading-relaxed font-normal">
+                      <p className="text-stone-700 text-sm md:text-base leading-relaxed font-normal">
                         {pillar.description}
                       </p>
                     </div>
