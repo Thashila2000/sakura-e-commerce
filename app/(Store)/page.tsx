@@ -4,6 +4,8 @@ import HeroCarousel from "../components/store/HeroCarousel";
 import FromJapanWithCare from "../components/store/FromJapanWithCare";
 import ThreeJapaneseEssentials from "../components/store/ThreeJapaneseEssentials";
 import ThisWeekFromJapan from "../components/store/ThisWeekFromJapan";
+import SignatureCollection from "../components/store/SignatureCollection";
+import WellnessBannerSection from "../components/store/Banner";
 
 export default function Home() {
   return (
@@ -20,7 +22,12 @@ export default function Home() {
 
         {/* Weekly Imports Section */}
         <ThisWeekFromJapan />
-     
+
+        {/* Signature / Featured Collection */}
+        <SignatureCollection />
+
+        {/* Wellness Banner Section below Signature Collection */}
+        <WellnessBannerSection />
       </div>
     </div>
   );

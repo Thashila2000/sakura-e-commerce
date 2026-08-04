@@ -1,5 +1,6 @@
 import { Bayon } from 'next/font/google';
 import Navbar from '../components/store/StoreNavbar';
+import Footer from '../components/store/Footer';
 import LoadingScreen from '../components/store/LoadingScreen'; // Adjust path if needed
 
 const bayon = Bayon({
@@ -29,6 +30,9 @@ export default function StoreLayout({
       <main className="flex-1 w-full pt-0">
         {children}
       </main>
+
+      {/* Store Footer */}
+      <Footer />
     </div>
   );
 }

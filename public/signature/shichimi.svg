@@ -1,0 +1,15 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <defs><linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#fff3e0"/><stop offset="100%" style="stop-color:#ffe0b2"/></linearGradient></defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <ellipse cx="400" cy="330" rx="200" ry="70" fill="#6D3B1F" opacity="0.8"/>
+  <ellipse cx="400" cy="280" rx="180" ry="130" fill="#8B4513"/>
+  <ellipse cx="400" cy="265" rx="150" ry="105" fill="#A0522D"/>
+  <circle cx="360" cy="250" r="10" fill="#DC143C" opacity="0.9"/>
+  <circle cx="400" cy="240" r="8" fill="#FF8C00" opacity="0.9"/>
+  <circle cx="435" cy="255" r="9" fill="#DC143C" opacity="0.8"/>
+  <circle cx="375" cy="275" r="6" fill="#F5F5DC" opacity="0.9"/>
+  <circle cx="415" cy="270" r="5" fill="#F5F5DC" opacity="0.9"/>
+  <circle cx="385" cy="255" r="4" fill="#228B22" opacity="0.8"/>
+  <circle cx="420" cy="280" r="7" fill="#FF6347" opacity="0.7"/>
+  <text x="400" y="520" text-anchor="middle" font-family="Georgia,serif" font-size="26" fill="#4a2005" font-weight="bold">Shichimi Togarashi</text>
+</svg>

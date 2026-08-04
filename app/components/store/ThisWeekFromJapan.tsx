@@ -41,6 +41,15 @@ const products: Product[] = [
     image: "/featured/spices.png",
     category: "Spices",
   },
+  {
+    id: 4,
+    title: "Yuzu Hydrating Mist",
+    badge: "Imported from Osaka",
+    price: "$22.00",
+    description: "Refreshing facial mist with yuzu citrus extract and hyaluronic acid for instant hydration.",
+    image: "/featured/serum.png",
+    category: "J-Beauty",
+  },
 ];
 
 // Header Container Variant (Staggers Title & Paragraph)
@@ -110,7 +119,7 @@ export default function ThisWeekFromJapan() {
   return (
     <section
       className="relative w-full z-10 py-16 sm:py-20 md:py-24 overflow-hidden antialiased"
-      style={{ backgroundColor: "#fcddf2" }}
+      style={{ backgroundColor: "#ffdbdb" }}
     >
       <div className="mx-auto max-w-7xl px-6">
         {/* Animated Section Header */}
@@ -142,7 +151,7 @@ export default function ThisWeekFromJapan() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6"
         >
           {products.map((product) => (
             <motion.div
@@ -152,7 +161,7 @@ export default function ThisWeekFromJapan() {
               className="group relative bg-white rounded-3xl overflow-hidden border border-white/80 shadow-md hover:shadow-2xl transition-[box-shadow,transform] duration-300 hover:-translate-y-1.5 flex flex-col justify-between"
             >
               {/* Product Image */}
-              <div className="relative w-full h-[180px] sm:h-[190px] lg:h-[240px] overflow-hidden">
+              <div className="relative w-full h-[200px] sm:h-[210px] overflow-hidden bg-stone-50">
                 <Image
                   src={product.image}
                   alt={product.title}
@@ -181,44 +190,42 @@ export default function ThisWeekFromJapan() {
               </div>
 
               {/* Card Details */}
-              <div className="p-4 sm:p-5 lg:p-6 flex-1 flex flex-col justify-between space-y-3 sm:space-y-4">
+              <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3">
                 <div className="space-y-2">
                   <div className="flex items-start justify-between gap-2">
-                    <h3 className="text-xl sm:text-xl lg:text-2xl text-stone-900 font-[family-name:var(--font-bayon)] leading-tight tracking-wide">
+                    <h3 className="text-lg sm:text-xl text-stone-900 font-[family-name:var(--font-bayon)] leading-tight tracking-wide">
                       {product.title}
                     </h3>
-                    <span className="text-base sm:text-base lg:text-lg font-bold text-stone-900 font-mono shrink-0">
+                    <span className="text-base font-bold text-stone-900 font-mono shrink-0">
                       {product.price}
                     </span>
                   </div>
 
-                  <p className="text-stone-600 text-base leading-relaxed">
+                  <p className="text-stone-600 text-sm sm:text-base leading-relaxed">
                     {product.description}
                   </p>
                 </div>
 
                 {/* CTA Button */}
-                <div className="w-full px-2 pt-1">
-                  <button
-                    type="button"
-                    className="w-full py-2.5 sm:py-3 px-6 rounded-full bg-stone-900 text-white font-semibold text-sm transition-all duration-300 hover:bg-stone-800 hover:shadow-lg active:scale-95 flex items-center justify-center gap-2 group/btn"
+                <button
+                  type="button"
+                  className="w-full py-2.5 px-6 rounded-full bg-stone-900 text-white font-semibold text-sm transition-all duration-300 hover:bg-rose-800 hover:shadow-lg active:scale-95 flex items-center justify-center gap-2 group/btn"
+                >
+                  <span>Quick Add</span>
+                  <svg
+                    className="w-4 h-4 transition-transform duration-300 group-hover/btn:translate-x-1"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
                   >
-                    <span>Quick Add</span>
-                    <svg
-                      className="w-4 h-4 transition-transform duration-300 group-hover/btn:translate-x-1.5"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M14 5l7 7m0 0l-7 7m7-7H3"
-                      />
-                    </svg>
-                  </button>
-                </div>
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M14 5l7 7m0 0l-7 7m7-7H3"
+                    />
+                  </svg>
+                </button>
               </div>
             </motion.div>
           ))}

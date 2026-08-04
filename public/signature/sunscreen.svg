@@ -1,0 +1,11 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <defs><linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#fff9c4"/><stop offset="100%" style="stop-color:#fff176"/></linearGradient><linearGradient id="tube" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#ffffff"/><stop offset="60%" style="stop-color:#fffde7"/><stop offset="100%" style="stop-color:#fff9c4"/></linearGradient></defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <rect x="290" y="160" width="220" height="100" rx="20" fill="url(#tube)" stroke="#ffd54f" stroke-width="2"/>
+  <rect x="270" y="175" width="30" height="70" rx="8" fill="#ffd54f"/>
+  <text x="420" y="218" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#f57f17" font-weight="bold">SAKURA SPF 50+</text>
+  <circle cx="400" cy="370" r="60" fill="white" opacity="0.7" stroke="#ffd54f" stroke-width="2"/>
+  <text x="400" y="360" text-anchor="middle" font-family="Arial,sans-serif" font-size="20" fill="#f57f17" font-weight="bold">SPF</text>
+  <text x="400" y="385" text-anchor="middle" font-family="Arial,sans-serif" font-size="28" fill="#f57f17" font-weight="bold">50+</text>
+  <text x="400" y="520" text-anchor="middle" font-family="Georgia,serif" font-size="26" fill="#e65100" font-weight="bold">Sunscreen SPF 50+</text>
+</svg>

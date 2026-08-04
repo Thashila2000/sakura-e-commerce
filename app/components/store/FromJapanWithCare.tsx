@@ -132,7 +132,7 @@ export default function FromJapanWithCare() {
     <section
       ref={containerRef}
       className="relative w-full z-10 -mt-8 sm:-mt-12 md:-mt-20 overflow-visible antialiased"
-      style={{ backgroundColor: "#ffebeb" }}
+      style={{ backgroundColor: "#ffdbdb" }}
     >
       {/* Wave Curve Top */}
       <div className="w-full overflow-hidden leading-none pointer-events-none select-none">
@@ -143,7 +143,7 @@ export default function FromJapanWithCare() {
         >
           <path
             d="M0,64 C240,150 480,0 720,32 C960,64 1200,150 1440,64 L1440,120 L0,120 Z"
-            fill="#ffebeb"
+            fill="#ffdbdb"
           />
         </svg>
       </div>
@@ -172,7 +172,7 @@ export default function FromJapanWithCare() {
                   Every product in our collection is curated, inspected, and delivered directly to your doorstep with pristine attention to detail.
                 </p>
                 <p className="text-stone-900 text-base sm:text-lg md:text-xl lg:text-2xl font-medium font-serif leading-relaxed border-l-4 border-rose-500/80 pl-5 italic drop-shadow-sm">
-                  At Sakura, we bring the heart of Japanese craftsmanship to your home. We partner directly with heritage tea estates, organic farms, and multi-generational artisans to share authentic products made with deep respect for tradition.
+                  At Sakura, we bring the heart of Japanese craftsmanship to your home. We partner directly with heritage tea estates, organic farms, and multi generational artisans to share authentic products made with deep respect for tradition.
                 </p>
               </div>
             </motion.div>
