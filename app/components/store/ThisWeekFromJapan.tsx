@@ -148,7 +148,8 @@ export default function ThisWeekFromJapan() {
             <motion.div
               key={product.id}
               variants={cardVariants}
-              className="group relative bg-white/95 backdrop-blur-sm rounded-3xl overflow-hidden border border-white/80 shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between"
+              style={{ willChange: "transform" }}
+              className="group relative bg-white rounded-3xl overflow-hidden border border-white/80 shadow-md hover:shadow-2xl transition-[box-shadow,transform] duration-300 hover:-translate-y-1.5 flex flex-col justify-between"
             >
               {/* Product Image */}
               <div className="relative w-full h-[180px] sm:h-[190px] lg:h-[240px] overflow-hidden">
@@ -157,13 +158,13 @@ export default function ThisWeekFromJapan() {
                   alt={product.title}
                   fill
                   sizes="(max-width: 1024px) 100vw, 33vw"
-                  className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                  className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
                 />
 
                 {/* Badge Overlay */}
                 <div className="absolute top-4 left-4 z-10 pointer-events-none">
                   <span
-                    className={`inline-block px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide backdrop-blur-md border shadow-md ${getBadgeStyle(
+                    className={`inline-block px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide border shadow-md ${getBadgeStyle(
                       product.badge
                     )}`}
                   >
@@ -173,7 +174,7 @@ export default function ThisWeekFromJapan() {
 
                 {/* Category Tag */}
                 <div className="absolute bottom-4 left-4 z-10 pointer-events-none">
-                  <span className="text-xs uppercase tracking-wider text-stone-700 font-semibold bg-white/90 px-2.5 py-1 rounded-md shadow-sm backdrop-blur-sm">
+                  <span className="text-xs uppercase tracking-wider text-stone-700 font-semibold bg-white/90 px-2.5 py-1 rounded-md shadow-sm">
                     {product.category}
                   </span>
                 </div>
