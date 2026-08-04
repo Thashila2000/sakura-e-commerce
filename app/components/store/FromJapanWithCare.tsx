@@ -1,7 +1,12 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
-import { motion, Variants, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
+import { useRef } from "react";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  MotionValue,
+} from "framer-motion";
 
 interface Pillar {
   id: number;
@@ -60,67 +65,68 @@ const pillars: Pillar[] = [
   },
 ];
 
+// ─── Card ranges: [fadeIn-start, fadeIn-end, hold-end, fadeOut-end] ─────────
+const CARD_RANGES = [
+  [0.12, 0.20, 0.32, 0.40],
+  [0.32, 0.40, 0.52, 0.60],
+  [0.52, 0.60, 0.72, 0.80],
+  [0.72, 0.80, 0.95, 1.00],
+];
+
+function useCardMotion(scrollYProgress: MotionValue<number>, idx: number) {
+  const [s0, s1, s2, s3] = CARD_RANGES[idx];
+  const isLast = idx === 3;
+
+  const opacity = useTransform(
+    scrollYProgress,
+    [s0, s1, s2, s3],
+    [0, 1, 1, isLast ? 1 : 0]
+  );
+  const y = useTransform(
+    scrollYProgress,
+    [s0, s1, s2, s3],
+    [36, 0, 0, isLast ? 0 : -36]
+  );
+  const scale = useTransform(
+    scrollYProgress,
+    [s0, s1, s2, s3],
+    [0.94, 1, 1, isLast ? 1 : 0.94]
+  );
+
+  return { opacity, y, scale };
+}
+
+// Dot width: pure MotionValue → no setState, zero re-renders on scroll
+function useDotWidth(scrollYProgress: MotionValue<number>, idx: number) {
+  const [, s1, s2] = CARD_RANGES[idx];
+  const mid = (s1 + s2) / 2;
+  return useTransform(scrollYProgress, [s1 - 0.04, s1, mid, s2, s2 + 0.04], [8, 24, 24, 24, 8]);
+}
+
 export default function FromJapanWithCare() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [isMobile, setIsMobile] = useState(false);
-  const [activeIndex, setActiveIndex] = useState(-1);
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
   });
 
-  // Calculate active index from scroll progress
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    if (latest < 0.15) {
-      setActiveIndex(-1);
-    } else if (latest >= 0.15 && latest < 0.35) {
-      setActiveIndex(0);
-    } else if (latest >= 0.35 && latest < 0.55) {
-      setActiveIndex(1);
-    } else if (latest >= 0.55 && latest < 0.75) {
-      setActiveIndex(2);
-    } else {
-      setActiveIndex(3);
-    }
-  });
-
-  // Animations for LHS Description (from centered on screen to sticky left column)
+  // Desktop-only slide: LHS slides from center to left column
   const desktopX = useTransform(scrollYProgress, [0, 0.15], ["55%", "0%"]);
   const desktopScale = useTransform(scrollYProgress, [0, 0.15], [1, 0.95]);
 
-  const descX = isMobile ? "0%" : desktopX;
-  const descScale = isMobile ? 1 : desktopScale;
+  // Pre-compute card & dot motion values (hooks must be unconditional)
+  const card0 = useCardMotion(scrollYProgress, 0);
+  const card1 = useCardMotion(scrollYProgress, 1);
+  const card2 = useCardMotion(scrollYProgress, 2);
+  const card3 = useCardMotion(scrollYProgress, 3);
+  const cards = [card0, card1, card2, card3];
 
-  // Animations for RHS Cards (sliding, scaling, and fading in/out)
-  const card1Opacity = useTransform(scrollYProgress, [0.12, 0.18, 0.32, 0.38], [0, 1, 1, 0]);
-  const card1Y = useTransform(scrollYProgress, [0.12, 0.18, 0.32, 0.38], [40, 0, 0, -40]);
-  const card1Scale = useTransform(scrollYProgress, [0.12, 0.18, 0.32, 0.38], [0.92, 1, 1, 0.92]);
-
-  const card2Opacity = useTransform(scrollYProgress, [0.32, 0.38, 0.52, 0.58], [0, 1, 1, 0]);
-  const card2Y = useTransform(scrollYProgress, [0.32, 0.38, 0.52, 0.58], [40, 0, 0, -40]);
-  const card2Scale = useTransform(scrollYProgress, [0.32, 0.38, 0.52, 0.58], [0.92, 1, 1, 0.92]);
-
-  const card3Opacity = useTransform(scrollYProgress, [0.52, 0.58, 0.72, 0.78], [0, 1, 1, 0]);
-  const card3Y = useTransform(scrollYProgress, [0.52, 0.58, 0.72, 0.78], [40, 0, 0, -40]);
-  const card3Scale = useTransform(scrollYProgress, [0.52, 0.58, 0.72, 0.78], [0.92, 1, 1, 0.92]);
-
-  const card4Opacity = useTransform(scrollYProgress, [0.72, 0.78, 0.92, 0.98], [0, 1, 1, 1]);
-  const card4Y = useTransform(scrollYProgress, [0.72, 0.78, 0.92, 0.98], [40, 0, 0, 0]);
-  const card4Scale = useTransform(scrollYProgress, [0.72, 0.78, 0.92, 0.98], [0.92, 1, 1, 1]);
-
-  const opacities = [card1Opacity, card2Opacity, card3Opacity, card4Opacity];
-  const ys = [card1Y, card2Y, card3Y, card4Y];
-  const scales = [card1Scale, card2Scale, card3Scale, card4Scale];
+  const dot0Width = useDotWidth(scrollYProgress, 0);
+  const dot1Width = useDotWidth(scrollYProgress, 1);
+  const dot2Width = useDotWidth(scrollYProgress, 2);
+  const dot3Width = useDotWidth(scrollYProgress, 3);
+  const dotWidths = [dot0Width, dot1Width, dot2Width, dot3Width];
 
   return (
     <section
@@ -147,38 +153,34 @@ export default function FromJapanWithCare() {
         {/* Sticky Viewport */}
         <div className="sticky top-0 h-screen w-full flex items-center overflow-hidden">
           <div className="relative z-10 mx-auto max-w-7xl w-full px-6 md:px-10 flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12">
-            
-            {/* LHS Description Column (Expanded Size & Width) */}
+
+            {/* LHS Description — desktop gets scroll-driven x/scale, mobile stays static */}
             <motion.div
               style={{
-                x: descX,
-                scale: descScale,
+                x: desktopX,
+                scale: desktopScale,
+                willChange: "transform",
               }}
               className="w-full md:w-7/12 flex flex-col justify-center space-y-5 md:space-y-7 text-stone-900"
             >
-            
-
               <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-stone-900 font-[family-name:var(--font-bayon)] uppercase tracking-wide leading-[1.05]">
                 From Japan <br className="hidden md:inline" /> With Care
               </h2>
 
               <div className="space-y-5 md:space-y-6">
-               <p className="text-stone-700 text-sm sm:text-base md:text-lg lg:text-xl font-normal leading-relaxed">
-  Every product in our collection is curated, inspected, and delivered directly to your doorstep with pristine attention to detail.
-</p>
+                <p className="text-stone-700 text-sm sm:text-base md:text-lg lg:text-xl font-normal leading-relaxed">
+                  Every product in our collection is curated, inspected, and delivered directly to your doorstep with pristine attention to detail.
+                </p>
                 <p className="text-stone-900 text-base sm:text-lg md:text-xl lg:text-2xl font-medium font-serif leading-relaxed border-l-4 border-rose-500/80 pl-5 italic drop-shadow-sm">
                   At Sakura, we bring the heart of Japanese craftsmanship to your home. We partner directly with heritage tea estates, organic farms, and multi-generational artisans to share authentic products made with deep respect for tradition.
                 </p>
               </div>
             </motion.div>
 
-            {/* RHS Cards Stack Container (Reduced Card Dimensions + Glassmorphism) */}
+            {/* RHS Cards Stack */}
             <div className="relative w-full md:w-5/12 h-[260px] sm:h-[300px] md:h-[380px] flex items-center justify-center">
               {pillars.map((pillar, idx) => {
-                const opacity = opacities[idx];
-                const y = ys[idx];
-                const scale = scales[idx];
-                const isActive = activeIndex === idx;
+                const { opacity, y, scale } = cards[idx];
 
                 return (
                   <motion.div
@@ -187,12 +189,15 @@ export default function FromJapanWithCare() {
                       opacity,
                       y,
                       scale,
-                      pointerEvents: isActive ? "auto" : "none",
+                      willChange: "transform, opacity",
+                      translateZ: 0,
+                      pointerEvents: "none",
                     }}
-                    className="absolute inset-0 w-full h-full bg-white/40 backdrop-blur-xl border border-white/60 rounded-3xl p-5 sm:p-6 md:p-8 flex flex-col justify-between shadow-2xl transition-all duration-300 group"
+                    className="absolute inset-0 w-full h-full bg-white/90 border border-white/70 rounded-3xl p-5 sm:p-6 md:p-8 flex flex-col justify-between shadow-xl group"
                   >
                     <div className="space-y-3 sm:space-y-4 md:space-y-5">
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-2xl bg-white/60 backdrop-blur-md flex items-center justify-center border border-white/80 shadow-md group-hover:bg-rose-50/80 transition-colors">
+                      {/* Icon — solid fill, no blur */}
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-2xl bg-rose-50 flex items-center justify-center border border-rose-100 shadow-sm">
                         {pillar.icon}
                       </div>
                       <div className="space-y-1">
@@ -208,10 +213,10 @@ export default function FromJapanWithCare() {
                       </p>
                     </div>
 
-                    {/* Progress Indicator inside each card */}
+                    {/* Progress bar */}
                     <div className="w-full bg-stone-900/10 h-1 rounded-full overflow-hidden mt-2">
                       <div
-                        className="bg-rose-700 h-full transition-all duration-300"
+                        className="bg-rose-700 h-full"
                         style={{ width: `${((idx + 1) / pillars.length) * 100}%` }}
                       />
                     </div>
@@ -219,14 +224,13 @@ export default function FromJapanWithCare() {
                 );
               })}
 
-              {/* Pagination Dots indicator */}
-              <div className="absolute -bottom-7 flex justify-center gap-2">
+              {/* Pagination dots — pure MotionValue width, zero React re-renders */}
+              <div className="absolute -bottom-7 flex justify-center gap-2 items-center">
                 {pillars.map((_, i) => (
-                  <div
+                  <motion.div
                     key={i}
-                    className={`h-2 rounded-full transition-all duration-300 ${
-                      activeIndex === i ? "w-6 bg-rose-800" : "w-2 bg-rose-300"
-                    }`}
+                    style={{ width: dotWidths[i] }}
+                    className="h-2 rounded-full bg-rose-800"
                   />
                 ))}
               </div>
