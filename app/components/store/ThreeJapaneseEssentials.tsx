@@ -36,14 +36,12 @@ const headingVariants: Variants = {
   hidden: { 
     opacity: 0, 
     y: -30, 
-    filter: "blur(4px)" 
   },
   visible: {
     opacity: 1,
     y: 0,
-    filter: "blur(0px)",
     transition: {
-      duration: 0.7,
+      duration: 0.6,
       ease: [0.25, 1, 0.5, 1],
     },
   },
@@ -73,36 +71,22 @@ export default function ThreeJapaneseEssentials() {
 
   return (
     <section
-      className="relative w-full z-10 -mt-8 sm:-mt-12 md:-mt-20 overflow-hidden antialiased"
+      className="relative w-full z-10 py-16 sm:py-20 md:py-24 overflow-hidden antialiased"
       style={{ backgroundColor: "#fffafa" }}
     >
-      {/* Wave Curve Top */}
-      <div className="w-full overflow-hidden leading-none pointer-events-none select-none">
-        <svg
-          viewBox="0 0 1440 120"
-          preserveAspectRatio="none"
-          className="w-full h-[40px] sm:h-[70px] md:h-[110px] block"
-        >
-          <path
-            d="M0,64 C240,150 480,0 720,32 C960,64 1200,150 1440,64 L1440,120 L0,120 Z"
-            fill="#fffafa"
-          />
-        </svg>
-      </div>
-
-      <div className="relative z-10 mx-auto max-w-6xl px-6 pb-16 pt-2 md:pb-20">
+      <div className="relative z-10 mx-auto max-w-6xl px-6">
         {/* Animated Heading & Subtitle */}
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: false, amount: 0.4 }}
+          viewport={{ once: true, amount: 0.4 }}
           variants={headingVariants}
           className="text-center mb-8 md:mb-12 max-w-2xl mx-auto space-y-2 antialiased"
         >
-          <h2 className="text-4xl sm:text-6xl md:text-7xl text-stone-900 tracking-wide font-[family-name:var(--font-bayon)] uppercase antialiased">
+          <h2 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl text-stone-900 tracking-wide font-[family-name:var(--font-bayon)] uppercase antialiased">
             Three Japanese Essentials
           </h2>
-          <p className="text-stone-600 text-sm sm:text-base md:text-lg leading-relaxed antialiased">
+          <p className="text-stone-600 text-base sm:text-lg md:text-lg leading-relaxed antialiased">
             Handpicked elements of everyday Japanese culture crafted for health, flavor, and timeless beauty rituals.
           </p>
         </motion.div>
@@ -115,7 +99,7 @@ export default function ThreeJapaneseEssentials() {
               custom={0}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: false, amount: 0.2 }}
+              viewport={{ once: true, amount: 0.2 }}
               variants={cardVariants}
               className="group relative rounded-3xl overflow-hidden border border-stone-200/60
                          shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl
@@ -123,11 +107,12 @@ export default function ThreeJapaneseEssentials() {
             >
               <div className="relative w-full h-full">
                 <Image
-                  src={large.image}
-                  alt={large.title}
-                  fill
-                  className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
-                />
+                   src={large.image}
+                   alt={large.title}
+                   fill
+                   sizes="(max-width: 768px) 100vw, 50vw"
+                   className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/40 to-transparent" />
               </div>
 
@@ -171,7 +156,7 @@ export default function ThreeJapaneseEssentials() {
                 custom={idx + 1}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: false, amount: 0.2 }}
+                viewport={{ once: true, amount: 0.2 }}
                 variants={cardVariants}
                 className="group relative rounded-3xl overflow-hidden border border-stone-200/60
                            shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl
@@ -182,6 +167,7 @@ export default function ThreeJapaneseEssentials() {
                     src={item.image}
                     alt={item.title}
                     fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/40 to-transparent" />

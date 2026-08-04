@@ -1,13 +1,7 @@
 "use client";
 
-import React from "react";
-import dynamic from "next/dynamic";
 import { motion, Variants } from "framer-motion";
-
-// Dynamically import ModelViewer with SSR disabled for WebGL stability
-const DynamicModelViewer = dynamic(() => import("./ModelViewer"), {
-  ssr: false,
-});
+import Image from "next/image";
 
 interface Product {
   id: number;
@@ -15,8 +9,7 @@ interface Product {
   badge: "Imported from Osaka" | "Limited Arrival" | "Bestseller";
   price: string;
   description: string;
-  modelPath: string;
-  scale?: number;
+  image: string;
   category: string;
 }
 
@@ -27,8 +20,7 @@ const products: Product[] = [
     badge: "Imported from Osaka",
     price: "$28.00",
     description: "First harvest ceremonial grade matcha ground in traditional stone mills.",
-    modelPath: "/model/tea.glb",
-    scale: 1.2,
+    image: "/featured/matcha.png",
     category: "Green Tea",
   },
   {
@@ -37,8 +29,7 @@ const products: Product[] = [
     badge: "Bestseller",
     price: "$45.00",
     description: "Infused with green tea antioxidants and rice extract for luminous skin.",
-    modelPath: "/model/serum3.glb",
-    scale: 1.2,
+    image: "/featured/serum.png",
     category: "J-Beauty",
   },
   {
@@ -47,8 +38,7 @@ const products: Product[] = [
     badge: "Limited Arrival",
     price: "$14.00",
     description: "Seven-spice blend sourced directly from Osaka spice masters.",
-    modelPath: "/model/serum3.glb",
-    scale: 1.2,
+    image: "/featured/spices.png",
     category: "Spices",
   },
 ];
@@ -67,17 +57,15 @@ const headerVariants: Variants = {
 
 // Header Item Variants
 const headerChildVariants: Variants = {
-  hidden: { 
-    opacity: 0, 
-    y: -25, 
-    filter: "blur(6px)" 
+  hidden: {
+    opacity: 0,
+    y: -20,
   },
   visible: {
     opacity: 1,
     y: 0,
-    filter: "blur(0px)",
     transition: {
-      duration: 0.7,
+      duration: 0.6,
       ease: [0.25, 1, 0.5, 1],
     },
   },
@@ -130,31 +118,31 @@ export default function ThisWeekFromJapan() {
           variants={headerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: false, amount: 0.4 }}
+          viewport={{ once: true, amount: 0.4 }}
           className="text-center mb-12 sm:mb-16 max-w-2xl mx-auto space-y-3 antialiased"
         >
-          <motion.h2 
+          <motion.h2
             variants={headerChildVariants}
-            className="text-4xl sm:text-6xl md:text-7xl text-stone-900 font-[family-name:var(--font-bayon)] uppercase tracking-wide antialiased"
+            className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl text-stone-900 font-[family-name:var(--font-bayon)] uppercase tracking-wide antialiased"
           >
             This Week From Japan
           </motion.h2>
 
-          <motion.p 
+          <motion.p
             variants={headerChildVariants}
-            className="text-stone-700 text-sm sm:text-base md:text-lg leading-relaxed antialiased"
+            className="text-stone-700 text-base sm:text-lg md:text-lg leading-relaxed antialiased"
           >
             Exclusive weekly import batches sourced directly from artisan producers in Japan.
           </motion.p>
         </motion.div>
 
-        {/* Product Cards Grid with 3D Models */}
+        {/* Product Cards Grid */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: false, amount: 0.2 }}
-          className="grid grid-cols-1 lg:grid-cols-3 gap-8"
+          viewport={{ once: true, amount: 0.2 }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6"
         >
           {products.map((product) => (
             <motion.div
@@ -162,11 +150,14 @@ export default function ThisWeekFromJapan() {
               variants={cardVariants}
               className="group relative bg-white/95 backdrop-blur-sm rounded-3xl overflow-hidden border border-white/80 shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between"
             >
-              {/* 3D Canvas Header Container */}
-              <div className="relative w-full h-[240px] sm:h-[260px] bg-gradient-to-b from-stone-100 to-stone-50 overflow-hidden cursor-grab active:cursor-grabbing">
-                <DynamicModelViewer 
-                  modelPath={product.modelPath} 
-                  scale={product.scale || 1} 
+              {/* Product Image */}
+              <div className="relative w-full h-[180px] sm:h-[190px] lg:h-[240px] overflow-hidden">
+                <Image
+                  src={product.image}
+                  alt={product.title}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 33vw"
+                  className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
                 />
 
                 {/* Badge Overlay */}
@@ -182,34 +173,34 @@ export default function ThisWeekFromJapan() {
 
                 {/* Category Tag */}
                 <div className="absolute bottom-4 left-4 z-10 pointer-events-none">
-                  <span className="text-xs uppercase tracking-wider text-stone-700 font-semibold bg-white/90 px-2.5 py-1 rounded-md shadow-xs backdrop-blur-xs">
+                  <span className="text-xs uppercase tracking-wider text-stone-700 font-semibold bg-white/90 px-2.5 py-1 rounded-md shadow-sm backdrop-blur-sm">
                     {product.category}
                   </span>
                 </div>
               </div>
 
               {/* Card Details */}
-              <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between space-y-5">
+              <div className="p-4 sm:p-5 lg:p-6 flex-1 flex flex-col justify-between space-y-3 sm:space-y-4">
                 <div className="space-y-2">
                   <div className="flex items-start justify-between gap-2">
-                    <h3 className="text-2xl sm:text-3xl text-stone-900 font-[family-name:var(--font-bayon)] leading-tight tracking-wide">
+                    <h3 className="text-xl sm:text-xl lg:text-2xl text-stone-900 font-[family-name:var(--font-bayon)] leading-tight tracking-wide">
                       {product.title}
                     </h3>
-                    <span className="text-lg sm:text-xl font-bold text-stone-900 font-mono">
+                    <span className="text-base sm:text-base lg:text-lg font-bold text-stone-900 font-mono shrink-0">
                       {product.price}
                     </span>
                   </div>
 
-                  <p className="text-stone-600 text-xs sm:text-sm leading-relaxed">
+                  <p className="text-stone-600 text-sm leading-relaxed">
                     {product.description}
                   </p>
                 </div>
 
-                {/* CTA Button with expanded width & padding */}
+                {/* CTA Button */}
                 <div className="w-full px-2 pt-1">
                   <button
                     type="button"
-                    className="w-full py-3.5 px-8 rounded-full bg-stone-900 text-white font-semibold text-sm transition-all duration-300 hover:bg-stone-800 hover:shadow-lg active:scale-98 flex items-center justify-center gap-2 group/btn"
+                    className="w-full py-2.5 sm:py-3 px-6 rounded-full bg-stone-900 text-white font-semibold text-sm transition-all duration-300 hover:bg-stone-800 hover:shadow-lg active:scale-95 flex items-center justify-center gap-2 group/btn"
                   >
                     <span>Quick Add</span>
                     <svg

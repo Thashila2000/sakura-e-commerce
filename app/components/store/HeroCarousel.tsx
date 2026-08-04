@@ -33,13 +33,17 @@ const slides = [
 export default function HeroCarousel() {
   const [index, setIndex] = useState(0);
   const [isReadyToSlide, setIsReadyToSlide] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
   useEffect(() => {
-    setIsMounted(true);
+    const mq = window.matchMedia("(orientation: portrait)");
+    setIsMobile(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
   }, []);
 
   useEffect(() => {
@@ -149,26 +153,15 @@ export default function HeroCarousel() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
           >
-            <picture className="relative block w-full h-full">
-              <source
-                media="(orientation: portrait)"
-                srcSet={currentSlide.mobileSrc}
-              />
-              <source
-                media="(orientation: landscape)"
-                srcSet={currentSlide.desktopSrc}
-              />
-              <Image
-                src={currentSlide.desktopSrc}
-                alt={currentSlide.altText}
-                fill
-                priority
-                unoptimized={!isMounted}
-                sizes="100vw"
-                quality={90}
-                className="object-cover object-center w-full h-full"
-              />
-            </picture>
+            <Image
+              src={isMobile ? currentSlide.mobileSrc : currentSlide.desktopSrc}
+              alt={currentSlide.altText}
+              fill
+              priority
+              sizes="100vw"
+              quality={85}
+              className="object-cover object-center w-full h-full"
+            />
 
             {/* Gradients */}
             <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/30 to-black/40 pointer-events-none" />
@@ -181,10 +174,10 @@ export default function HeroCarousel() {
           <AnimatePresence mode="wait">
             <motion.div
               key={`text-${currentSlide.id}`}
-              initial={{ opacity: 0, y: 15 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.35, ease: "easeOut" }}
               className="max-w-2xl text-white space-y-3 sm:space-y-4 md:space-y-5"
             >
               {/* Heading with Bayon Font */}
@@ -218,11 +211,10 @@ export default function HeroCarousel() {
               key={slide.id}
               onClick={() => setIndex(i)}
               aria-label={`Go to slide ${i + 1}: ${slide.title}`}
-              className={`h-2 sm:h-2.5 rounded-full transition-all duration-500 ${
-                i === index
+              className={`h-2 sm:h-2.5 rounded-full transition-all duration-500 ${i === index
                   ? "w-8 sm:w-10 bg-white"
                   : "w-2 sm:w-2.5 bg-white/40 hover:bg-white/70"
-              }`}
+                }`}
             />
           ))}
         </div>

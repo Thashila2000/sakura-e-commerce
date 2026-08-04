@@ -53,25 +53,26 @@ export default function LoadingScreen() {
 
           {/* Dense Floating Sakura Petals Background (16 Petals) */}
           <div className="absolute inset-0 pointer-events-none opacity-60 overflow-hidden">
-            {[...Array(16)].map((_, i) => (
+            {[...Array(10)].map((_, i) => (
               <motion.div
                 key={i}
+                style={{ willChange: "transform" }}
                 initial={{
-                  x: `${(i * 6) + (i % 3 === 0 ? 2 : -5)}vw`,
+                  x: `${(i * 10) + (i % 3 === 0 ? 2 : -5)}vw`,
                   y: "-15vh",
                   rotate: 0,
                   opacity: 0.2 + (i % 5) * 0.15,
                 }}
                 animate={{
                   y: "115vh",
-                  x: `${(i * 6) + (i % 2 === 0 ? 15 : -15)}vw`,
+                  x: `${(i * 10) + (i % 2 === 0 ? 15 : -15)}vw`,
                   rotate: 360 + i * 45,
                 }}
                 transition={{
                   duration: 3 + (i % 4) * 0.8,
                   repeat: Infinity,
                   ease: "linear",
-                  delay: (i * 0.18) % 2,
+                  delay: (i * 0.25) % 2,
                 }}
                 className={`absolute ${
                   i % 3 === 0
@@ -98,8 +99,6 @@ export default function LoadingScreen() {
             }}
             className="relative flex flex-col items-center justify-center text-center px-4 w-full max-w-sm sm:max-w-md mx-auto z-10"
           >
-            {/* Ambient Light Glow */}
-            <div className="absolute inset-0 rounded-full bg-white/40 blur-2xl transform scale-125 -z-10" />
 
             {/* Logo Image Box */}
             <div className="relative w-56 sm:w-80 h-28 sm:h-40 flex items-center justify-center">

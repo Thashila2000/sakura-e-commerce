@@ -1,6 +1,7 @@
 'use client';
 
 import HeroCarousel from "../components/store/HeroCarousel";
+import FromJapanWithCare from "../components/store/FromJapanWithCare";
 import ThreeJapaneseEssentials from "../components/store/ThreeJapaneseEssentials";
 import ThisWeekFromJapan from "../components/store/ThisWeekFromJapan";
 
@@ -12,8 +13,9 @@ export default function Home() {
         <HeroCarousel />
       </div>
 
-      {/* 2. Overlapping Essentials Section */}
+      {/* 2. Overlapping Section */}
       <div className="relative z-10 mt-20">
+        <FromJapanWithCare />
         <ThreeJapaneseEssentials />
 
         {/* Weekly Imports Section */}
