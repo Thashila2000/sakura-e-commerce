@@ -46,7 +46,7 @@ const products: Product[] = [
    
     price: "$12.00",
     description: "Smoky dried chilies blended with roasted sesame and yuzu peel for bold umami heat.",
-    image: "/signature/chili.svg",
+    image: "/signature/chili.png",
     category: "Spices",
     isNew: true,
     badgeColor: "bg-rose-900/80 text-rose-100 border-rose-700/50",
@@ -57,7 +57,7 @@ const products: Product[] = [
   
     price: "$14.00",
     description: "Osaka's iconic seven spice blend red pepper, sansho, nori, ginger & citrus in every pinch.",
-    image: "/signature/shichimi.svg",
+    image: "/signature/shichimi.png",
     category: "Spices",
     badge: "Artisan",
     badgeColor: "bg-amber-900/80 text-amber-100 border-amber-700/50",
@@ -68,7 +68,7 @@ const products: Product[] = [
     
     price: "$32.00",
     description: "Gentle rice bran & green tea foam cleanser. Deeply purifies while preserving the skin barrier.",
-    image: "/signature/cleanser.svg",
+    image: "/signature/cleanser.png",
     category: "J-Beauty",
     badge: "J-Beauty",
     badgeColor: "bg-pink-900/80 text-pink-100 border-pink-700/50",
@@ -79,7 +79,7 @@ const products: Product[] = [
  
     price: "$38.00",
     description: "SPF 50+ PA++++ lightweight fluid. Invisible finish with cherry blossom extract & hyaluronic acid.",
-    image: "/signature/sunscreen.svg",
+    image: "/signature/sunscreen.png",
     category: "J-Beauty",
     isNew: true,
     badgeColor: "bg-yellow-700/80 text-yellow-100 border-yellow-600/50",
@@ -90,7 +90,7 @@ const products: Product[] = [
     
     price: "$45.00",
     description: "Deep hydration moisturizer enriched with fermented rice water and bio cellulose from Japan.",
-    image: "/signature/moisturizer.svg",
+    image: "/signature/moisturizer.png",
     category: "J-Beauty",
     badge: "Bestseller",
     badgeColor: "bg-teal-900/80 text-teal-100 border-teal-700/50",
@@ -207,22 +207,13 @@ export default function SignatureCollection() {
               >
                 {/* Product Image */}
                 <div className="relative w-full h-[200px] sm:h-[210px] overflow-hidden bg-stone-50">
-                  {product.image.endsWith(".svg") ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={product.image}
-                      alt={product.title}
-                      className="w-full h-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
-                    />
-                  ) : (
-                    <Image
-                      src={product.image}
-                      alt={product.title}
-                      fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                      className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
-                    />
-                  )}
+                  <Image
+                    src={product.image}
+                    alt={product.title}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
+                  />
 
                   {/* Badge */}
                   {(product.badge || product.isNew) && (
