@@ -86,7 +86,7 @@ export default function ThreeJapaneseEssentials() {
           <h2 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl text-stone-900 tracking-wide font-[family-name:var(--font-bayon)] uppercase antialiased">
             Three Japanese Essentials
           </h2>
-          <p className="text-stone-600 text-base sm:text-lg md:text-lg leading-relaxed antialiased">
+          <p className="text-stone-600 text-lg sm:text-xl md:text-lg leading-relaxed antialiased">
             Handpicked elements of everyday Japanese culture crafted for health, flavor, and timeless beauty rituals.
           </p>
         </motion.div>

@@ -159,7 +159,7 @@ export default function SignatureCollection() {
 
           <motion.p
             variants={headerChildVariants}
-            className="text-stone-700 text-base sm:text-lg md:text-lg leading-relaxed antialiased"
+            className="text-stone-700 text-lg sm:text-xl md:text-lg leading-relaxed antialiased"
           >
             Hand selected bestsellers from rare teas and bold spices to award winning J-Beauty rituals.
           </motion.p>
@@ -248,14 +248,14 @@ export default function SignatureCollection() {
                   <div className="space-y-1.5">
                    
                     <div className="flex items-start justify-between gap-2">
-                      <h3 className="text-lg sm:text-xl text-stone-900 font-[family-name:var(--font-bayon)] leading-tight tracking-wide">
+                      <h3 className="text-xl sm:text-2xl md:text-xl text-stone-900 font-[family-name:var(--font-bayon)] leading-tight tracking-wide">
                         {product.title}
                       </h3>
                       <span className="text-base font-bold text-stone-900 font-mono shrink-0">
                         {product.price}
                       </span>
                     </div>
-                    <p className="text-stone-600 text-sm sm:text-base leading-relaxed">
+                    <p className="text-stone-600 text-base sm:text-lg md:text-base leading-relaxed">
                       {product.description}
                     </p>
                   </div>

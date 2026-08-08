@@ -33,9 +33,13 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <footer 
+    <motion.footer
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.05 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
       className="w-full text-stone-900 pt-16 pb-12 antialiased"
-      style={{ backgroundColor: "rgba(251,183,221, 0.85)" }} // Transparent #ffdbdb
+      style={{ backgroundColor: "rgba(251,183,221, 0.85)" }}
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         
@@ -174,6 +178,6 @@ export default function Footer() {
         </div>
 
       </div>
-    </footer>
+    </motion.footer>
   );
 }

@@ -168,10 +168,10 @@ export default function FromJapanWithCare() {
               </h2>
 
               <div className="space-y-5 md:space-y-6">
-                <p className="text-stone-700 text-base md:text-lg lg:text-xl font-normal leading-relaxed">
+                <p className="text-stone-700 text-lg md:text-lg lg:text-xl font-normal leading-relaxed">
                   Every product in our collection is curated, inspected, and delivered directly to your doorstep with pristine attention to detail.
                 </p>
-                <p className="text-stone-900 text-base sm:text-lg md:text-xl lg:text-2xl font-medium font-serif leading-relaxed border-l-4 border-rose-500/80 pl-5 italic drop-shadow-sm">
+                <p className="text-stone-900 text-lg sm:text-xl md:text-xl lg:text-2xl font-medium font-serif leading-relaxed border-l-4 border-rose-500/80 pl-5 italic drop-shadow-sm">
                   At Sakura, we bring the heart of Japanese craftsmanship to your home. We partner directly with heritage tea estates, organic farms, and multi generational artisans to share authentic products made with deep respect for tradition.
                 </p>
               </div>
